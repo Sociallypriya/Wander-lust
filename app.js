@@ -97,6 +97,11 @@ app.use("/", userRouter);
 //     res.send(registerUser);
 // });
 
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
+
+
 
 app.all("*",(req, res, next)=>{
     next(new ExpressError(404,"Page Not Found"));
@@ -110,20 +115,8 @@ app.use((err,req,res,next)=>{
 });
 
 
-async function startServer() {
-  try {
-    await mongoose.connect(dbUrl);
-    console.log("Connected to DB");
+const PORT = process.env.PORT || 8080;
 
-    const port = process.env.PORT || 8080;
-
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
-
-  } catch (err) {
-    console.log("DB Connection Failed:", err);
-  }
-}
-
-startServer();
+app.listen(PORT, ()=>{
+    console.log(`server is listening to port ${PORT}`);
+});

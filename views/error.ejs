@@ -1,12 +1,66 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row mt-3" >
-    <div class="alert alert-danger col-6 offset-3" role="alert">
-        <!-- <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
-            <use xlink:href="#exclamation-triangle-fill"/>
-        </svg> -->
-        <p class="alert-heading"><%= message %></p>
-        
+<style>
+  .error-container {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .error-card {
+    max-width: 500px;
+    width: 100%;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    text-align: center;
+    border: none;
+  }
+
+  .error-icon {
+    font-size: 3rem;
+    color: #fe424d;
+    margin-bottom: 1rem;
+  }
+
+  .error-message {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-home {
+    background-color: #222;
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    text-decoration: none;
+    transition: 0.2s ease;
+  }
+
+  .btn-home:hover {
+    background-color: #000;
+  }
+</style>
+
+<div class="error-container">
+  <div class="card error-card">
+
+    <div class="error-icon">
+      <i class="fa-solid fa-circle-exclamation"></i>
     </div>
 
+    <h4>Oops! Something went wrong</h4>
+
+    <p class="error-message">
+      <%= message %>
+    </p>
+
+    <a href="/listings" class="btn-home">
+      Go Back Home
+    </a>
+
+  </div>
 </div>

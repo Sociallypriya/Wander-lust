@@ -1,29 +1,101 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row mt-3">
-    <h1 class="col-6 offset-3">Login</h1>
-    <div class="col-6 offset-3">
-        <form action="/login" method="POST" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input 
-                    name="username" 
-                    id="username"
-                    type="text" 
-                    class="form-control" 
-                    required
-                />
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input 
-                    name="password" 
-                    id="password"
-                    type="password" 
-                    class="form-control" 
-                    required
-                />
-            </div>
-            <button class="btn btn-success">Login</button>
-        </form>
+
+<style>
+  .auth-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .auth-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    border: none;
+  }
+
+  .auth-title {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .btn-auth {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 8px;
+    background-color: #222;
+    border: none;
+    color: white;
+    transition: 0.2s ease;
+  }
+
+  .btn-auth:hover {
+    background-color: #000;
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #222;
+  }
+
+  .auth-footer {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .auth-footer a {
+    text-decoration: none;
+    color: #fe424d;
+    font-weight: 500;
+  }
+
+  .auth-footer a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="auth-container">
+  <div class="card auth-card">
+
+    <h3 class="auth-title">Welcome Back 👋</h3>
+
+    <form action="/login" method="POST" class="needs-validation" novalidate>
+
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input 
+          name="username"
+          type="text"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input 
+          name="password"
+          type="password"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <button class="btn btn-auth">
+        Login
+      </button>
+
+    </form>
+
+    <div class="auth-footer">
+      Don’t have an account?
+      <a href="/signup">Sign up</a>
     </div>
+
+  </div>
 </div>

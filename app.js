@@ -110,8 +110,20 @@ app.use((err,req,res,next)=>{
 });
 
 
-const PORT = process.env.PORT || 8080;
+async function startServer() {
+  try {
+    await mongoose.connect(dbUrl);
+    console.log("Connected to DB");
 
-app.listen(PORT, ()=>{
-    console.log(`server is listening to port ${PORT}`);
-});
+    const port = process.env.PORT || 8080;
+
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
+
+  } catch (err) {
+    console.log("DB Connection Failed:", err);
+  }
+}
+
+startServer();

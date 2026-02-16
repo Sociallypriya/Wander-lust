@@ -16,7 +16,8 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-console.log("DB URL:", process.env.ATLASDB_URL);
+console.log("Connecting to database...");
+
 
 
 const dbUrl = process.env.ATLASDB_URL;
@@ -47,15 +48,16 @@ const store = MongoStore.create({
     touchAfter:24*3600,
 });
 
-store.on("error",()=>{
-    console.log("ERROR in MONGO SESSION STORE",err);
+store.on("error",(err)=>{
+    console.log("ERROR in MONGO SESSION STORE", err);
 });
+
 
 const sessionOptions = {
     store,
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         expires: Date.now() + 7*24*60*60*1000,
         maxAge: 7*24*60*60*1000,
@@ -69,8 +71,8 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
 
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -81,6 +83,11 @@ app.use((req, res, next)=>{
     next();
 });
 
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
+
+
 // app.get("/demouser", async (req, res) => {
 //     let fakeUser = new User({
 //         email: "student@gmail.com",
@@ -89,13 +96,6 @@ app.use((req, res, next)=>{
 //     let registerUser = await User.register(fakeUser, "helloWorld");
 //     res.send(registerUser);
 // });
-
-
-app.use("/listings", listingRouter);
-app.use("/listings/:id/reviews", reviewRouter);
-app.use("/", userRouter);
-
-
 
 
 app.all("*",(req, res, next)=>{
@@ -110,6 +110,8 @@ app.use((err,req,res,next)=>{
 });
 
 
-app.listen(8080, ()=>{
-    console.log("server is listening to port 8080");
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, ()=>{
+    console.log(`server is listening to port ${PORT}`);
 });
